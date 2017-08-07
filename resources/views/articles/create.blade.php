@@ -1,7 +1,8 @@
 @extends('layouts.main')
 @section('content')
 
-<form class="" action="articles" method="post">
+<form class="" action="../articles" method="post">
+  {{csrf_field()}}
   <div class="form-group">
 <label for="title">Title: </label>
     <input type="text" class="form-control" name="title">
@@ -14,7 +15,7 @@
 <div class="form-group">
   <label for="published_at">Publish on</label>
   <input type="date" class="form-control" name="date" value="2017-10-25">
-  <input type="date" value="<?php echo date("Y-m-d"); ?>">
+
 
 </div>
 <div class="form-group">

@@ -16,7 +16,7 @@ class ArticlesController extends Controller
     }
     public function store()
     {
-      $input = Request::all();
+      $input = (Request::all());
       Article::create($input);
       return redirect('articles');
     }
