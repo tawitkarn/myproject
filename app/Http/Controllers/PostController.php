@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Posts;
-
+use Carbon\Carbon;
+use App\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +14,9 @@ class PostController extends Controller
   */
   public function index()
   {
-    return view('posts.create');
+    $posts = Post::all();
+
+    return view('posts.index' ,compact('posts'));
   }
 
   /**
@@ -24,6 +26,9 @@ class PostController extends Controller
   */
   public function create()
   {
+
+    // $posts = Posts::where('title', 'ff')->get();
+    // dd($posts);
     return view('posts.create');
 
   }
@@ -37,16 +42,23 @@ class PostController extends Controller
   public function store(Request $request)
   {
     //dd(request()->all()); show all data in array
-    // $posts = new posts;
-    // $posts->title = request('title');
-    // $posts->body = request('body');
-    // $posts->save();
-Posts::create(request(['title','body']));
-    // Posts::create([
-    //   'title' => request('title'),
-    //   'body' => request('body')
-    //
-    // ]);
+    $posts = new Post;
+    $posts->title = request('title');
+    $posts->body = request('body');
+    $posts->save();
+
+//     $this->validate(request(), [
+//      'title' => 'required',//     'titile' => 'required|max10',
+//
+//      'body' => 'required'
+//     ]);
+// // Post::create(request(['title','body']));
+//     Post::create([
+//       'title' => request('title'),
+//       'body' => request('body')
+//
+//     ]);
+    return redirect('/');
   }
 
   /**
