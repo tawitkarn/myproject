@@ -14,7 +14,9 @@ class PostController extends Controller
   */
   public function index()
   {
-    $posts = Post::all();
+    $posts = Post::orderBy('id','desc')->get();
+//หรือ
+    // $posts = Post::latest()->get();
 
     return view('posts.index' ,compact('posts'));
   }
@@ -42,22 +44,22 @@ class PostController extends Controller
   public function store(Request $request)
   {
     //dd(request()->all()); show all data in array
-    $posts = new Post;
-    $posts->title = request('title');
-    $posts->body = request('body');
-    $posts->save();
+    // $posts = new Post;
+    // $posts->title = request('title');
+    // $posts->body = request('body');
+    // $posts->save();
+    //
+    $this->validate(request(), [
+     'title' => 'required',//     'titile' => 'required|max10',
 
-//     $this->validate(request(), [
-//      'title' => 'required',//     'titile' => 'required|max10',
-//
-//      'body' => 'required'
-//     ]);
-// // Post::create(request(['title','body']));
-//     Post::create([
-//       'title' => request('title'),
-//       'body' => request('body')
-//
-//     ]);
+     'body' => 'required'
+    ]);
+// Post::create(request(['title','body']));
+    Post::create([
+      'title' => request('title'),
+      'body' => request('body')
+
+    ]);
     return redirect('/');
   }
 
@@ -67,9 +69,11 @@ class PostController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function show($id)
+  public function show(Post $post)
   {
-    return view('posts.show');
+
+
+    return view('posts.show',compact('post'));
 
   }
   /**
